@@ -12,6 +12,7 @@
     integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
   <!-- Fontawesome -->
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <link rel="stylesheet" href="./public/assets/base.css">
   <link rel="stylesheet" href="./public/assets/calendar.css">
   <title>Lich phung vu</title>
 </head>
@@ -20,28 +21,31 @@
   <div id="app">
     <div class="container theme-showcase">
       <div class="row">
-        <h1 class="summary_month">{{yearInfo}}</h5>
-          <!-- print sample css -->
-          <div id="sample-color" class="col">
-            <span class="sample event le_trong_d">{{leTrong}}</span>
-            <span class="sample event le_kinh_d">{{leKinh}}</span>
-            <span class="sample event le_nho_d">{{leNho}}</span>
-            <span class="sample today">{{today}}</span>
-          </div>
-
-          <!-- render full year -->
-          <div class="each_date" v-for="(fullDateData, ind) in fullNamPhungVu">
-            <div class='date-detail' v-for="(item, index) in fullDateData">
-              <h4 v-if="index == 'date'">{{printDate(item)}}</h4>
-              <p v-if="index == 'cacNgayLe'">
-                <span v-for="ngayle in item" class="detail-le event"
-                  :class="{le_trong_d: isLeTrong(ngayle['type']), le_kinh_d: isLeKinh(ngayle['type']), le_nho_d: isLeNho(ngayle['type'])}">
-                  {{ngayle['name']}} <i v-if="ngayle['type'] !== ''">- {{ngayle['type']}}</i>
-                </span>
-              </p>
+        <div class="col">
+          <h1 class="summary_month">{{yearInfo}}</h5>
+            <!-- print sample css -->
+            <div id="sample-color" class="col">
+              <span class="sample event le_trong_d">{{leTrong}}</span>
+              <span class="sample event le_kinh_d">{{leKinh}}</span>
+              <span class="sample event le_nho_d">{{leNho}}</span>
+              <span class="sample today">{{today}}</span>
             </div>
-          </div>
 
+            <!-- render full year -->
+            <div class="each_date" v-for="(fullDateData, ind) in fullNamPhungVu">
+              <div class='date-detail' v-for="(item, index) in fullDateData">
+                <h4 v-if="index == 'date'">{{printDate(item)}}</h4>
+                <div class="container" v-if="index == 'cacNgayLe'">
+                  <div class="row">
+                    <div v-for="ngayle in item" class="col detail-le event"
+                      :class="{le_trong_d: isLeTrong(ngayle['type']), le_kinh_d: isLeKinh(ngayle['type']), le_nho_d: isLeNho(ngayle['type'])}">
+                      {{ngayle['name']}} <i v-if="ngayle['type'] !== ''">- {{ngayle['type']}}</i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
       </div>
     </div>
   </div>
