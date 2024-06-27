@@ -4,11 +4,107 @@
     <meta charset="UTF-8">
     <link rel="icon" href="/favicon.ico">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vite App</title>
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <!-- Fontawesome -->
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="./assets/libs/fontawesome/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./public/assets/calendar.css">
+    <title>Lich phung vu</title>
   </head>
   <body>
-    <h5>Vite App</h5>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
+    <div id="app">
+      <div class="container theme-showcase">
+        <div class="row">
+          <h1 class="summary_month">{{yearInfo}}</h5>
+          <!-- print sample css -->
+          <div id="sample-color" class="col">
+            <span class="sample event le_trong_d" >{{leTrong}}</span>
+            <span class="sample event le_kinh_d" >{{leKinh}}</span>
+            <span class="sample event le_nho_d" >{{leNho}}</span>
+            <span class="sample today" >{{today}}</span>
+          </div>
+
+          <!-- render full year -->
+          <div class="each_date" v-for="(fullDateData, ind) in fullNamPhungVu">
+              <div class='date-detail' v-for="(item, index) in fullDateData">
+                <h4 v-if="index == 'date'">{{printDate(item)}}</h4>
+                <p  v-if="index == 'cacNgayLe'">
+                  <span v-for="ngayle in item" class="detail-le event"
+                      :class="{le_trong_d: isLeTrong(ngayle['type']), le_kinh_d: isLeKinh(ngayle['type']), le_nho_d: isLeNho(ngayle['type'])}"
+                    >
+                      {{ngayle['name']}} <i v-if="ngayle['type'] !== ''">- {{ngayle['type']}}</i>
+                  </span>
+                </p>
+              </div>
+          </div>
+
+      </div>
+    </div>
+    <script type="module">
+      import { createApp, ref, reactive } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+      import { LE_KINH, LE_TRONG, LE_NHO, getTinhNamPhungVuInstant} from 'lichphungvu';
+      // check nam
+      var currentDate = new Date();
+      var defaultYear = currentDate.getFullYear();
+      let params = new URLSearchParams(window.location.search);
+      let searchYear = params.get('searchYear') ? params.get('searchYear') : defaultYear;
+      //////
+      
+      const namPhungvuIns = getTinhNamPhungVuInstant(searchYear);
+      const namPhungVu = namPhungvuIns.getNamPhungVu();
+      const fullNamPhungVuData = namPhungvuIns.getFullLichPhungVuTheoNam();
+      let finalData = [];
+      for(let dd in fullNamPhungVuData) { // resort to make index start from 0...
+        const formattedItem = {
+          ...fullNamPhungVuData[dd]
+        };
+        finalData.push(formattedItem);
+      }
+      function isLeTrong(loaiLe) {
+        return loaiLe == LE_TRONG
+      }
+      function isLeNho(loaiLe) {
+        return loaiLe == LE_NHO
+      }
+      
+      function isLeKinh(loaiLe) {
+        return loaiLe == LE_KINH
+      }
+      function printDate(d) {
+        const weekdays = ["CN","T2","T3","T4","T5","T6","T7"];
+
+        let day;
+        let month;
+        day = d.getDate();
+        month = d.getMonth() + 1;
+        let year = d.getFullYear();
+        
+        let weekday = d.getDay();
+        day = day < 10 ? '0'+day : day;
+        month = month < 10 ? '0' + month : month;
+        return `${weekdays[weekday]}, ${day}-${month}-${year}`;
+      }
+      const app = createApp({
+        setup() {
+          return {
+              leTrong: LE_TRONG,
+              leKinh: LE_KINH,
+              leNho: LE_NHO,
+              today: 'Today',
+              yearInfo:  'Năm Phụng vụ '+ namPhungVu.year + ' - ' + namPhungVu.yearABC + '- ' + namPhungVu.oddEven,
+              fullNamPhungVu: finalData,
+              isLeTrong,
+              isLeNho,
+              isLeKinh,
+              printDate
+          }
+        }
+      }); // all Vue app start with createApp
+      app.mount('#app'); // mount to root div
+    </script>
   </body>
 </html>

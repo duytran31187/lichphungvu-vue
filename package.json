@@ -11,6 +11,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "lichphungvu": "^1.0.3",
     "vue": "^3.4.29"
   },
   "devDependencies": {
