@@ -1,5 +1,4 @@
 // my-component.js
-import { ref } from 'vue';
 import { LE_KINH, LE_TRONG, LE_NHO, getTinhNamPhungVuInstant} from 'lichphungvu';
 
 // check nam
