@@ -11,7 +11,6 @@
         integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
     <!-- Fontawesome -->
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <link href="./assets/libs/fontawesome/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./public/assets/calendar.css">
     <title>Lich phung vu</title>
   </head>
@@ -47,63 +46,9 @@
     <script type="module">
       import { createApp, ref, reactive } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
       import { LE_KINH, LE_TRONG, LE_NHO, getTinhNamPhungVuInstant} from 'lichphungvu';
-      // check nam
-      var currentDate = new Date();
-      var defaultYear = currentDate.getFullYear();
-      let params = new URLSearchParams(window.location.search);
-      let searchYear = params.get('searchYear') ? params.get('searchYear') : defaultYear;
-      //////
+      import appConfig from './public/app.js';
       
-      const namPhungvuIns = getTinhNamPhungVuInstant(searchYear);
-      const namPhungVu = namPhungvuIns.getNamPhungVu();
-      const fullNamPhungVuData = namPhungvuIns.getFullLichPhungVuTheoNam();
-      let finalData = [];
-      for(let dd in fullNamPhungVuData) { // resort to make index start from 0...
-        const formattedItem = {
-          ...fullNamPhungVuData[dd]
-        };
-        finalData.push(formattedItem);
-      }
-      function isLeTrong(loaiLe) {
-        return loaiLe == LE_TRONG
-      }
-      function isLeNho(loaiLe) {
-        return loaiLe == LE_NHO
-      }
-      
-      function isLeKinh(loaiLe) {
-        return loaiLe == LE_KINH
-      }
-      function printDate(d) {
-        const weekdays = ["CN","T2","T3","T4","T5","T6","T7"];
-
-        let day;
-        let month;
-        day = d.getDate();
-        month = d.getMonth() + 1;
-        let year = d.getFullYear();
-        
-        let weekday = d.getDay();
-        day = day < 10 ? '0'+day : day;
-        month = month < 10 ? '0' + month : month;
-        return `${weekdays[weekday]}, ${day}-${month}-${year}`;
-      }
-      const app = createApp({
-        setup() {
-          return {
-              leTrong: LE_TRONG,
-              leKinh: LE_KINH,
-              leNho: LE_NHO,
-              today: 'Today',
-              yearInfo:  'Năm Phụng vụ '+ namPhungVu.year + ' - ' + namPhungVu.yearABC + '- ' + namPhungVu.oddEven,
-              fullNamPhungVu: finalData,
-              isLeTrong,
-              isLeNho,
-              isLeKinh,
-              printDate
-          }
-        }
-      }); // all Vue app start with createApp
+      const app = createApp(appConfig); // all Vue app start with createApp
       app.mount('#app'); // mount to root div
     </script>
   </body>
