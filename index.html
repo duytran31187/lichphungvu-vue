@@ -33,15 +33,14 @@
 
             <!-- render full year -->
             <div class="each_date" v-for="(fullDateData, ind) in fullNamPhungVu">
-              <div class='date-detail' v-for="(item, index) in fullDateData">
-                <h4 v-if="index == 'date'">{{printDate(item)}}</h4>
-                <div class="container" v-if="index == 'cacNgayLe'">
-                  <div class="row">
-                    <div v-for="ngayle in item" class="col detail-le event"
-                      :class="{le_trong_d: isLeTrong(ngayle['type']), le_kinh_d: isLeKinh(ngayle['type']), le_nho_d: isLeNho(ngayle['type'])}">
-                      {{ngayle['name']}} <i v-if="ngayle['type'] !== ''">- {{ngayle['type']}}</i>
-                    </div>
+              <div class="container">
+                <div class="row ">
+                  <div class="w-25 border bg-light text-center">{{printDate(fullDateData['date'])}}</div>
+                  <div v-for="ngayle in fullDateData['cacNgayLe']" class="col detail-le event border"
+                    :class="{le_trong_d: isLeTrong(ngayle['type']), le_kinh_d: isLeKinh(ngayle['type']), le_nho_d: isLeNho(ngayle['type'])}">
+                    {{ngayle['name']}} <i v-if="ngayle['type'] !== ''">- {{ngayle['type']}}</i>
                   </div>
+                  <div class="w-75 bg-light border" v-if="fullDateData['cacNgayLe'].length==0">&nbsp;</div>
                 </div>
               </div>
             </div>

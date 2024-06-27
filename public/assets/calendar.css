@@ -22,10 +22,10 @@
     text-align: right;
   }
   .event {
-    border-top: 1px solid #b2dba1;
-    border-bottom: 1px solid #b2dba1;
-    background-image: linear-gradient(to bottom, #dff0d8 0px, #c8e5bc 100%);
-    background-repeat: repeat-x;
+    /* border-top: 1px solid #b2dba1;
+    border-bottom: 1px solid #b2dba1; */
+    /* background-image: linear-gradient(to bottom, #dff0d8 0px, #c8e5bc 100%);
+    background-repeat: repeat-x; */
     color: #3c763d;
     border-width: 1px;
     font-size: .75em;
@@ -37,28 +37,28 @@
     margin-bottom: 1px;
   }
   .event.le_nho_d {
-    border-top: 1px solid #9acfea;
-    border-bottom: 1px solid #9acfea;
+    /* border-top: 1px solid #9acfea;
+    border-bottom: 1px solid #9acfea; */
     background-image: linear-gradient(to bottom, #d9edf7 0px, #b9def0 100%);
     background-repeat: repeat-x;
     color: #31708f;
-    border-width: 1px;
+    /* border-width: 1px; */
   }
   .event.le_trong_d {
-    border-top: 1px solid #ec4444;
-    border-bottom: 1px solid #ec4444;
+    /* border-top: 1px solid #ec4444;
+    border-bottom: 1px solid #ec4444; */
     background-image: linear-gradient(to bottom, #f69b9b 0px, #f2a3a3 100%);
     background-repeat: repeat-x;
     color: #be0f0f;
-    border-width: 1px;
+    /* border-width: 1px; */
   }
   .event.le_kinh_d {
-    border-top: 1px solid #c4dc2c;
-    border-bottom: 1px solid #c4dc2c;
+    /* border-top: 1px solid #c4dc2c;
+    border-bottom: 1px solid #c4dc2c; */
     background-image: linear-gradient(to bottom, #e8f5ba 0px, #d5eb82 100%);
     background-repeat: repeat-x;
     color: #2c3203;
-    border-width: 1px;
+    /* border-width: 1px; */
   }
   /* .event.all-day.begin {
     border-left: 1px solid #9acfea;
