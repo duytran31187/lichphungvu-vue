@@ -22,29 +22,38 @@
     <div class="container theme-showcase">
       <div class="row">
         <div class="col">
-          <h1 class="summary_month">{{yearInfo}}</h5>
-            <!-- print sample css -->
-            <div id="sample-color" class="col">
-              <span class="sample event le_trong_d">{{leTrong}}</span>
-              <span class="sample event le_kinh_d">{{leKinh}}</span>
-              <span class="sample event le_nho_d">{{leNho}}</span>
-              <span class="sample today">{{today}}</span>
-            </div>
+          <!-- search form -->
+          <form method="GET">
+            <p>Year is: {{ searchYearInfo }}</p>
+            <input name="searchYear" v-model="searchYearInfo" placeholder="Năm Phụng Vụ" />
+            <button type="submit"> Search</button>
+          </form>
 
-            <!-- render full year -->
-            <div class="each_date" v-for="(fullDateData, ind) in fullNamPhungVu">
-              <div class="container">
-                <div class="row ">
-                  <div class="w-25 border bg-light text-center align-middle">{{printDate(fullDateData['date'])}}</div>
-                  <div v-for="ngayle in fullDateData['cacNgayLe']" class="col detail-le event border "
-                    :class="[getNgayLeEventClass(ngayle['type'])]">
-                    {{ngayle['name']}}
-                    <!-- <i v-if="ngayle['type'] !== ''">- {{ngayle['type']}}</i> -->
-                  </div>
-                  <div class="w-75 bg-light border" v-if="fullDateData['cacNgayLe'].length==0">&nbsp;</div>
+          <!-- end search form -->
+          <h1 class="summary_month">{{ yearInfo }}</h1>
+          </h5>
+          <!-- print sample css -->
+          <div id="sample-color" class="col">
+            <span class="sample event le_trong_d">{{leTrong}}</span>
+            <span class="sample event le_kinh_d">{{leKinh}}</span>
+            <span class="sample event le_nho_d">{{leNho}}</span>
+            <span class="sample today">{{today}}</span>
+          </div>
+
+          <!-- render full year -->
+          <div class="each_date" v-for="(fullDateData, ind) in fullNamPhungVu">
+            <div class="container">
+              <div class="row ">
+                <div class="w-25 border bg-light text-center align-middle">{{printDate(fullDateData['date'])}}</div>
+                <div v-for="ngayle in fullDateData['cacNgayLe']" class="col detail-le event border "
+                  :class="[getNgayLeEventClass(ngayle['type'])]">
+                  {{ngayle['name']}}
+                  <!-- <i v-if="ngayle['type'] !== ''">- {{ngayle['type']}}</i> -->
                 </div>
+                <div class="w-75 bg-light border" v-if="fullDateData['cacNgayLe'].length==0">&nbsp;</div>
               </div>
             </div>
+          </div>
         </div>
       </div>
     </div>
@@ -53,7 +62,6 @@
     import { createApp, ref, reactive } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
     import { LE_KINH, LE_TRONG, LE_NHO, getTinhNamPhungVuInstant } from 'lichphungvu';
     import appConfig from './public/app.js';
-
     const app = createApp(appConfig); // all Vue app start with createApp
     app.mount('#app'); // mount to root div
   </script>
