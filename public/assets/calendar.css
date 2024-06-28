@@ -12,7 +12,7 @@
     background-color: #eee;
   }
   .today {
-    background-image: linear-gradient(to bottom, #db3c3c 0px, #f0c9c9 100%);
+    background-image: linear-gradient(to bottom, #f76565 0px, #f78787 100%);
     background-repeat: repeat-x;
   }
   .outside .date {
