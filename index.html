@@ -24,7 +24,6 @@
         <div class="col">
           <!-- search form -->
           <form v-on:submit.prevent="doResearch">
-            <p>Year is: {{ searchYearInfo }}</p>
             <input type="number" name="searchYear" v-model="searchYearInfo" placeholder="Năm Phụng Vụ" />
             <button type="submit"> Search</button>
           </form>
