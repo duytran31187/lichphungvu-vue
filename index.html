@@ -45,8 +45,7 @@
             <div class="container">
               <div class="row ">
                 <div class="w-25 border bg-light text-center align-middle">{{printDate(fullDateData['date'])}}</div>
-                <div v-for="ngayle in fullDateData['cacNgayLe']" class="col detail-le event border "
-                  :class="[getNgayLeEventClass(ngayle['type'])]"
+                <div v-for="ngayle in fullDateData['cacNgayLe']" v-bind:class="getNgayLeEventClass(ngayle['type'])"
                   v-show="(ngayle['type'] == leTrong && showLeTrong) || (ngayle['type'] == leKinh && showLeKinh) || (ngayle['type'] == leNho && showLeNho) || ngayle['type'] == ''">
                   {{ngayle['name']}}
                   <!-- <i v-if="ngayle['type'] !== ''">- {{ngayle['type']}}</i> -->
@@ -79,14 +78,15 @@
       return loaiLe == LE_KINH
     }
     function getNgayLeEventClass(loaiLe) {
+      const defaultClss = 'col detail-le event border';
       if (isLeKinh(loaiLe)) {
-        return 'le_kinh_d'
+        return defaultClss + ' le_kinh_d'
       } else if (isLeTrong(loaiLe)) {
-        return 'le_trong_d';
+        return defaultClss + ' le_trong_d';
       } else if (isLeNho(loaiLe)) {
-        return 'le_nho_d';
+        return defaultClss + ' le_nho_d';
       } else {
-        return 'bg-light';
+        return defaultClss + ' bg-light';
       }
     }
     function printDate(d) {
