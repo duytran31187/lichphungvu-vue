@@ -24,19 +24,20 @@
         <div class="col">
           <!-- search form -->
           <form v-on:submit.prevent="doResearch">
-            <input type="number" name="searchYear" v-model="searchYearInfo" placeholder="Năm Phụng Vụ" />
-            <button type="submit"> Search</button>
+            <input type="number" name="searchYear" v-model="searchYearInfo" placeholder="Năm Phụng Vụ"
+              v-on:change="doResearch" />
+            <!-- <button type="submit"> Search</button> -->
           </form>
 
           <!-- end search form -->
-          <h1 class="summary_month">{{ yearInfo }}</h1>
+          <h4 class="summary_month">{{ yearInfo }}</h4>
           </h5>
           <!-- print sample css -->
           <div id="sample-color" class="col">
-            <span class="sample badge event le_trong_d">{{leTrong}}</span>
-            <span class="sample badge event le_kinh_d">{{leKinh}}</span>
-            <span class="sample badge event le_nho_d">{{leNho}}</span>
-            <span class="sample badge event today">{{today}}</span>
+            <button class="button sample event le_trong_d" v-on:click="toggleLeTrong">{{leTrong}}</button>
+            <button class="button sample event le_kinh_d" v-on:click="toggleLeKinh">{{leKinh}}</button>
+            <button class="button sample event le_nho_d" v-on:click="toggleLeNho">{{leNho}}</button>
+            <button class="button sample event today">{{today}}</button>
           </div>
 
           <!-- render full year -->
@@ -45,7 +46,8 @@
               <div class="row ">
                 <div class="w-25 border bg-light text-center align-middle">{{printDate(fullDateData['date'])}}</div>
                 <div v-for="ngayle in fullDateData['cacNgayLe']" class="col detail-le event border "
-                  :class="[getNgayLeEventClass(ngayle['type'])]">
+                  :class="[getNgayLeEventClass(ngayle['type'])]"
+                  v-show="(ngayle['type'] == leTrong && showLeTrong) || (ngayle['type'] == leKinh && showLeKinh) || (ngayle['type'] == leNho && showLeNho) || ngayle['type'] == ''">
                   {{ngayle['name']}}
                   <!-- <i v-if="ngayle['type'] !== ''">- {{ngayle['type']}}</i> -->
                 </div>
@@ -138,6 +140,9 @@
           printDate,
           getNgayLeEventClass,
           searchYearInfo: defaultYear,
+          showLeTrong: true,
+          showLeNho: true,
+          showLeKinh: true,
         }
       },
       methods: {
@@ -145,6 +150,15 @@
           const { finalData, yearInfo } = doResearch(this.searchYearInfo);
           this.yearInfo = yearInfo;
           this.fullNamPhungVu = finalData;
+        },
+        toggleLeTrong() {
+          this.showLeTrong = !this.showLeTrong;
+        },
+        toggleLeKinh() {
+          this.showLeKinh = !this.showLeKinh;
+        },
+        toggleLeNho() {
+          this.showLeNho = !this.showLeNho;
         }
       }
     });
