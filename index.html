@@ -23,9 +23,9 @@
       <div class="row">
         <div class="col">
           <!-- search form -->
-          <form method="GET">
+          <form v-on:submit.prevent="doResearch">
             <p>Year is: {{ searchYearInfo }}</p>
-            <input name="searchYear" v-model="searchYearInfo" placeholder="Năm Phụng Vụ" />
+            <input type="number" name="searchYear" v-model="searchYearInfo" placeholder="Năm Phụng Vụ" />
             <button type="submit"> Search</button>
           </form>
 
@@ -58,12 +58,98 @@
       </div>
     </div>
   </div>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <script type="module">
     import { createApp, ref, reactive } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
     import { LE_KINH, LE_TRONG, LE_NHO, getTinhNamPhungVuInstant } from 'lichphungvu';
-    import appConfig from './public/app.js';
-    const app = createApp(appConfig); // all Vue app start with createApp
-    app.mount('#app'); // mount to root div
+    // check nam
+    var currentDate = new Date();
+    var defaultYear = currentDate.getFullYear();
+    //////
+
+    function isLeTrong(loaiLe) {
+      return loaiLe == LE_TRONG
+    }
+    function isLeNho(loaiLe) {
+      return loaiLe == LE_NHO
+    }
+
+    function isLeKinh(loaiLe) {
+      return loaiLe == LE_KINH
+    }
+    function getNgayLeEventClass(loaiLe) {
+      if (isLeKinh(loaiLe)) {
+        return 'le_kinh_d'
+      } else if (isLeTrong(loaiLe)) {
+        return 'le_trong_d';
+      } else if (isLeNho(loaiLe)) {
+        return 'le_nho_d';
+      } else {
+        return 'bg-light';
+      }
+    }
+    function printDate(d) {
+      const weekdays = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
+
+      let day;
+      let month;
+      day = d.getDate();
+      month = d.getMonth() + 1;
+      let year = d.getFullYear();
+
+      let weekday = d.getDay();
+      day = day < 10 ? '0' + day : day;
+      month = month < 10 ? '0' + month : month;
+      return `${weekdays[weekday]}, ${day}-${month}-${year}`;
+    }
+
+    function doResearch(year) {
+      const namPhungvuIns = getTinhNamPhungVuInstant(year);
+      const namPhungVu = namPhungvuIns.getNamPhungVu();
+      const fullNamPhungVuData = namPhungvuIns.getFullLichPhungVuTheoNam();
+      let finalData = [];
+      for (let dd in fullNamPhungVuData) { // resort to make index start from 0...
+        const formattedItem = {
+          ...fullNamPhungVuData[dd]
+        };
+        finalData.push(formattedItem);
+      }
+      const yearInfo = yearInfoTitle(namPhungVu);
+      return {
+        finalData,
+        yearInfo
+      }
+    }
+    function yearInfoTitle(namPhungVu) {
+      return 'Năm Phụng vụ ' + namPhungVu.year + ' - ' + namPhungVu.yearABC + '- ' + namPhungVu.oddEven;
+    }
+    const app = Vue.createApp({
+      data() {
+        const { finalData, yearInfo } = doResearch(defaultYear);
+        return {
+          leTrong: LE_TRONG,
+          leKinh: LE_KINH,
+          leNho: LE_NHO,
+          today: 'Today',
+          yearInfo,
+          fullNamPhungVu: finalData,
+          isLeTrong,
+          isLeNho,
+          isLeKinh,
+          printDate,
+          getNgayLeEventClass,
+          searchYearInfo: defaultYear,
+        }
+      },
+      methods: {
+        doResearch() {
+          const { finalData, yearInfo } = doResearch(this.searchYearInfo);
+          this.yearInfo = yearInfo;
+          this.fullNamPhungVu = finalData;
+        }
+      }
+    });
+    app.mount('#app');
   </script>
 </body>
 
