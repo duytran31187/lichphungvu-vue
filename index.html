@@ -36,8 +36,8 @@
               <div class="container">
                 <div class="row ">
                   <div class="w-25 border bg-light text-center align-middle">{{printDate(fullDateData['date'])}}</div>
-                  <div v-for="ngayle in fullDateData['cacNgayLe']" class="col detail-le event border"
-                    :class="{le_trong_d: isLeTrong(ngayle['type']), le_kinh_d: isLeKinh(ngayle['type']), le_nho_d: isLeNho(ngayle['type'])}">
+                  <div v-for="ngayle in fullDateData['cacNgayLe']" class="col detail-le event border "
+                    :class="[getNgayLeEventClass(ngayle['type'])]">
                     {{ngayle['name']}}
                     <!-- <i v-if="ngayle['type'] !== ''">- {{ngayle['type']}}</i> -->
                   </div>

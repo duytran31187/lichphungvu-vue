@@ -28,6 +28,17 @@ function isLeNho(loaiLe) {
 function isLeKinh(loaiLe) {
   return loaiLe == LE_KINH
 }
+function getNgayLeEventClass(loaiLe) {
+  if (isLeKinh(loaiLe)) {
+    return 'le_kinh_d'
+  } else if(isLeTrong(loaiLe)) {
+    return 'le_trong_d';
+  } else if(isLeNho(loaiLe)) {
+    return 'le_nho_d';
+  } else {
+    return 'bg-light';
+  }
+}
 function printDate(d) {
   const weekdays = ["CN","T2","T3","T4","T5","T6","T7"];
 
@@ -54,7 +65,8 @@ export default {
         isLeTrong,
         isLeNho,
         isLeKinh,
-        printDate
+        printDate,
+        getNgayLeEventClass
     }
   }
 }
