@@ -33,11 +33,11 @@
           <h4 class="summary_month">{{ yearInfo }}</h4>
           </h5>
           <!-- print sample css -->
-          <div id="sample-color" class="col">
-            <button class="button sample event le_trong_d" v-on:click="toggleLeTrong">{{leTrong}}</button>
-            <button class="button sample event le_kinh_d" v-on:click="toggleLeKinh">{{leKinh}}</button>
-            <button class="button sample event le_nho_d" v-on:click="toggleLeNho">{{leNho}}</button>
-            <button class="button sample event today">{{today}}</button>
+          <div class="btn-group">
+            <button type="button" class="btn  sample le_trong_d" v-on:click="toggleLeTrong">{{leTrong}}</button>
+            <button type="button" class="btn  sample le_kinh_d" v-on:click="toggleLeKinh">{{leKinh}}</button>
+            <button type="button" class="btn  sample le_nho_d" v-on:click="toggleLeNho">{{leNho}}</button>
+            <button type="button" class="btn  sample today">{{today}}</button>
           </div>
 
           <!-- render full year -->

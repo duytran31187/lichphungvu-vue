@@ -12,7 +12,8 @@
     background-color: #eee;
   }
   .today {
-    background-color: #f0c9c9;
+    background-image: linear-gradient(to bottom, #db3c3c 0px, #f0c9c9 100%);
+    background-repeat: repeat-x;
   }
   .outside .date {
     color: #ccc;
@@ -36,7 +37,7 @@
     text-overflow: ellipsis;
     margin-bottom: 1px;
   }
-  .event.le_nho_d {
+  .le_nho_d {
     /* border-top: 1px solid #9acfea;
     border-bottom: 1px solid #9acfea; */
     background-image: linear-gradient(to bottom, #d9edf7 0px, #b9def0 100%);
@@ -44,7 +45,7 @@
     color: #31708f;
     /* border-width: 1px; */
   }
-  .event.le_trong_d {
+  .le_trong_d {
     /* border-top: 1px solid #ec4444;
     border-bottom: 1px solid #ec4444; */
     background-image: linear-gradient(to bottom, #f69b9b 0px, #f2a3a3 100%);
@@ -52,7 +53,7 @@
     color: #be0f0f;
     /* border-width: 1px; */
   }
-  .event.le_kinh_d {
+  .le_kinh_d {
     /* border-top: 1px solid #c4dc2c;
     border-bottom: 1px solid #c4dc2c; */
     background-image: linear-gradient(to bottom, #e8f5ba 0px, #d5eb82 100%);
