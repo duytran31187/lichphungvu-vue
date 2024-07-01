@@ -1,34 +1,27 @@
-import { ref } from 'vue';
-
-import { LE_KINH, LE_TRONG, LE_NHO, getTinhNamPhungVuInstant} from 'lichphungvu';
-
+import { createApp, ref, reactive } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js';
+import { LE_KINH, LE_TRONG, LE_NHO, getTinhNamPhungVuInstant } from './lichphungvu/dist/index.mjs';
 // check nam
 var currentDate = new Date();
 var defaultYear = currentDate.getFullYear();
-let params = new URLSearchParams(window.location.search);
-let searchYear = params.get('searchYear') ? params.get('searchYear') : defaultYear;
 //////
-
-function isLeTrong(loaiLe) {
-  return loaiLe == LE_TRONG
-}
-function isLeNho(loaiLe) {
-  return loaiLe == LE_NHO
-}
-
-function isLeKinh(loaiLe) {
-  return loaiLe == LE_KINH
-}
 function getNgayLeEventClass(loaiLe) {
-  if (isLeKinh(loaiLe)) {
-    return 'le_kinh_d'
-  } else if (isLeTrong(loaiLe)) {
-    return 'le_trong_d';
-  } else if (isLeNho(loaiLe)) {
-    return 'le_nho_d';
-  } else {
-    return 'bg-light';
+  const defaultClss = 'col detail-le event border';
+  let classes = '';
+  switch (loaiLe) {
+    case LE_KINH:
+      classes = defaultClss + ' le_kinh_d';
+      break;
+    case LE_NHO:
+      classes = defaultClss + ' le_nho_d';
+      break;
+    case LE_TRONG:
+      classes = defaultClss + ' le_trong_d';
+      break;
+    default:
+      classes = defaultClss + ' bg-light';
+      break;
   }
+  return classes;
 }
 function printDate(d) {
   const weekdays = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
@@ -46,7 +39,6 @@ function printDate(d) {
 }
 
 function doResearch(year) {
-  console.log(`doResearch for ${year}`);
   const namPhungvuIns = getTinhNamPhungVuInstant(year);
   const namPhungVu = namPhungvuIns.getNamPhungVu();
   const fullNamPhungVuData = namPhungvuIns.getFullLichPhungVuTheoNam();
@@ -66,26 +58,39 @@ function doResearch(year) {
 function yearInfoTitle(namPhungVu) {
   return 'Năm Phụng vụ ' + namPhungVu.year + ' - ' + namPhungVu.yearABC + '- ' + namPhungVu.oddEven;
 }
-export default {
-  setup() {
-    {
-      const searchYearInfo = ref(searchYear);
-        const { finalData, yearInfo } = doResearch(searchYearInfo.value);
-        return {
-          leTrong: LE_TRONG,
-          leKinh: LE_KINH,
-          leNho: LE_NHO,
-          today: 'Today',
-          yearInfo,
-          fullNamPhungVu: finalData,
-          isLeTrong,
-          isLeNho,
-          isLeKinh,
-          printDate,
-          getNgayLeEventClass,
-          searchYearInfo,
-          doResearch,
-        }
+const app = Vue.createApp({
+  data() {
+    const { finalData, yearInfo } = doResearch(defaultYear);
+    return {
+      leTrong: LE_TRONG,
+      leKinh: LE_KINH,
+      leNho: LE_NHO,
+      today: 'Today',
+      yearInfo,
+      fullNamPhungVu: finalData,
+      printDate,
+      getNgayLeEventClass,
+      searchYearInfo: defaultYear,
+      showLeTrong: true,
+      showLeNho: true,
+      showLeKinh: true,
+    }
+  },
+  methods: {
+    doResearch() {
+      const { finalData, yearInfo } = doResearch(this.searchYearInfo);
+      this.yearInfo = yearInfo;
+      this.fullNamPhungVu = finalData;
+    },
+    toggleLeTrong() {
+      this.showLeTrong = !this.showLeTrong;
+    },
+    toggleLeKinh() {
+      this.showLeKinh = !this.showLeKinh;
+    },
+    toggleLeNho() {
+      this.showLeNho = !this.showLeNho;
     }
   }
-}
+});
+app.mount('#app');
