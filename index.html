@@ -66,28 +66,24 @@
     var currentDate = new Date();
     var defaultYear = currentDate.getFullYear();
     //////
-
-    function isLeTrong(loaiLe) {
-      return loaiLe == LE_TRONG
-    }
-    function isLeNho(loaiLe) {
-      return loaiLe == LE_NHO
-    }
-
-    function isLeKinh(loaiLe) {
-      return loaiLe == LE_KINH
-    }
     function getNgayLeEventClass(loaiLe) {
       const defaultClss = 'col detail-le event border';
-      if (isLeKinh(loaiLe)) {
-        return defaultClss + ' le_kinh_d'
-      } else if (isLeTrong(loaiLe)) {
-        return defaultClss + ' le_trong_d';
-      } else if (isLeNho(loaiLe)) {
-        return defaultClss + ' le_nho_d';
-      } else {
-        return defaultClss + ' bg-light';
+      let classes = '';
+      switch (loaiLe) {
+        case LE_KINH:
+          classes = defaultClss + ' le_kinh_d';
+          break;
+        case LE_NHO:
+          classes = defaultClss + ' le_nho_d';
+          break;
+        case LE_TRONG:
+          classes = defaultClss + ' le_trong_d';
+          break;
+        default:
+          classes = defaultClss + ' bg-light';
+          break;
       }
+      return classes;
     }
     function printDate(d) {
       const weekdays = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
@@ -134,9 +130,6 @@
           today: 'Today',
           yearInfo,
           fullNamPhungVu: finalData,
-          isLeTrong,
-          isLeNho,
-          isLeKinh,
           printDate,
           getNgayLeEventClass,
           searchYearInfo: defaultYear,
